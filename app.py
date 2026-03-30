@@ -1,11 +1,4 @@
-import sys
-import subprocess
 
-# Force install sklearn at runtime (fix for Streamlit Cloud)
-try:
-    import sklearn
-except:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "scikit-learn==1.3.2"])
 import streamlit as st
 import numpy as np
 from PIL import Image
