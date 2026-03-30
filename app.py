@@ -6,7 +6,7 @@ import pickle
 # Load model safely
 @st.cache_resource
 def load_model():
-    with open("best_model.pkl", "rb") as f:
+    with open("model.pkl", "rb") as f:
         return pickle.load(f)
 
 model = load_model()
