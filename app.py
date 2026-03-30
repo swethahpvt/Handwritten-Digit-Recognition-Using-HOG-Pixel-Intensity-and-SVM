@@ -11,12 +11,11 @@ import numpy as np
 from PIL import Image
 import pickle
 
-# Load model safely
+
 @st.cache_resource
 def load_model():
     with open("model.pkl", "rb") as f:
         return pickle.load(f)
-
 model = load_model()
 
 # Title
