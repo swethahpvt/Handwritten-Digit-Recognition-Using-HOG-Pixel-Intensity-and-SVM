@@ -2,10 +2,11 @@ import streamlit as st
 import numpy as np
 from PIL import Image
 import pickle
+from skimage.feature import hog
 
 @st.cache_resource
 def load_model():
-    with open("model.pkl", "rb") as f:  # ✅ Fixed filename
+    with open("model.pkl", "rb") as f:
         return pickle.load(f)
 
 model = load_model()
@@ -18,8 +19,33 @@ uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpg", "jpeg
 if uploaded_file is not None:
     img = Image.open(uploaded_file).convert('L')
     img = img.resize((28, 28))
+    
     st.image(img, caption="Uploaded Image", use_container_width=True)
+    
     img_array = np.array(img) / 255.0
-    img_flat = img_array.reshape(1, -1)
-    prediction = model.predict(img_flat)
+    
+    # ✅ Extract HOG features (matches training)
+    hog_features = hog(
+        img_array,
+        orientations=9,
+        pixels_per_cell=(14, 14),
+        cells_per_block=(1, 1),
+        visualize=False
+    )
+    
+    hog_features = hog_features.reshape(1, -1)
+    
+    prediction = model.predict(hog_features)
     st.subheader(f"Predicted Digit: {prediction[0]}")
+```
+
+---
+
+## Also update `requirements.txt`:
+Add `scikit-image`:
+```
+streamlit==1.40.0
+numpy==1.26.4
+pillow==10.4.0
+scikit-learn==1.3.2
+scikit-image==0.22.0
