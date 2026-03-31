@@ -1,70 +1,77 @@
-Image Classification using HOG, Zernike & Pixel Features
+Handwritten Digit Recognition Using HOG, Pixel Intensity, and SVM
+
+A machine learning web application that recognizes handwritten digits (0–9) from uploaded images using Support Vector Machine (SVM) with Pixel Intensity features and PCA dimensionality reduction.
+
+Live Demo: [Click Here](https://handwritten-digit-recognition-using-hog-vti3.onrender.com)
+
 Overview
 
-This project focuses on comparing different feature extraction techniques and machine learning models for image classification. The goal is to analyze how feature representation impacts classification performance.
+This project compares three feature extraction techniques — **Pixel Intensity**, **HOG (Histogram of Oriented Gradients)**, and **Zernike Moments** — combined with multiple classifiers to classify handwritten digits from the MNIST dataset.
 
-Three feature extraction methods are used:
-- Pixel Features (Raw intensity values)
-- HOG (Histogram of Oriented Gradients)
-- Zernike Moments (Shape descriptors and rotation invariant)
+The best performing model — **Pixel + SVM with 98.1% accuracy** — is deployed as an interactive Streamlit web app.
 
-These features are evaluated using multiple machine learning classifiers.
- Objectives
+Model Performance Comparison
 
-- Compare different feature extraction techniques  
-- Evaluate multiple machine learning models  
-- Analyze robustness to rotation and thickness variations  
-- Identify the best feature-model combination  
- Technologies Used
+| Feature   | SVM   | KNN   | Logistic Regression | Random Forest |
+|-----------|-------|-------|----------------------|---------------|
+| Pixel     | 98.1% | 97.4% | 91.0%               | 95.2%         |
+| HOG       | 95.6% | 95.7% | 96.7%               | 93.8%         |
+| Zernike   | 84.9% | 85.3% | 73.3%               | 82.6%         |
 
-- Python  
-- NumPy  
-- Pandas  
-- Scikit-learn  
-- Matplotlib  
-- Mahotas (for Zernike moments)  
- Machine Learning Models
+Feature Extraction Methods
 
-- Support Vector Machine (SVM)  
-- Logistic Regression  
-- K-Nearest Neighbors (KNN)  
-- Random Forest  
- Methodology
- Pixel Features
-- Images are flattened into 784-dimensional vectors  
-- Used directly for training models  
- HOG Features
-- Extracts gradient and edge-based features  
-- Captures structural information  
-Zernike Features
-- Extracts shape-based features  
-- Rotation invariant  
-- Captures global image structure  
-Results
+Pixel Intensity
+- Raw pixel values (28×28 = 784 features) normalized to [0, 1]
+- PCA applied to reduce to 75 components
+- Highest accuracy among all methods
 
-| Feature Type | SVM   | Logistic | KNN    | Random Forest | Best Model | Accuracy |
-|--------------|-------|----------|--------|---------------|-----------|-----------|
-| Pixel        | 0.981 | 0.91     | 0.974  | 0.952         | SVM       | 0.981     |
-| HOG          | 0.956 | 0.9666   | 0.955  | 0.9384        | Logistic  | 0.9666    |
-| Zernike      | 0.849 | 0.733    | 0.8527 | 0.82          | KNN       | 0.8527    |
- Key Observations
+HOG (Histogram of Oriented Gradients)
+- Captures edge and gradient structure
+- Parameters: pixels_per_cell=(4,4), cells_per_block=(2,2), orientations=9
+- Moderate robustness to thickness variations
 
-- Pixel features achieved the highest accuracy with SVM  
-- HOG features performed best with Logistic Regression  
-- Zernike features provide strong shape representation but lower accuracy  
-- Different models perform better with different feature types  
-Robustness Analysis
+Zernike Moments
+- Captures global shape information using radius=10, degree=8
+- Rotation-invariant but misses fine pixel-level detail
 
-- Pixel Features: Sensitive to rotation and thickness variations  
-- HOG Features: Moderately robust  
-- Zernike Features: Highly robust to rotation and thickness variations  
-Evaluation Metrics
+Project Structure
 
-- Accuracy  
-- Confusion Matrix  
-- Classification Report (Precision, Recall, F1-score)  
+├── app.py               # Streamlit web application
+├── code.ipynb           # Full experimentation notebook
+├── model.pkl            # Trained Pixel SVM model + PCA
+├── requirements.txt     # Python dependencies
+├── runtime.txt          # Python version for deployment
+└── README.md            # Project documentation
 
-1. Clone the repository  
-2. Install dependencies:
+How It Works
+
+1. User uploads an image of a handwritten digit
+2. Image is converted to grayscale and resized to 28×28
+3. Pixel values are normalized and flattened
+4. PCA reduces dimensions to 75 components
+5. SVM predicts the digit (0–9)
+
+Tech Stack
+
+- **Python 3.11**
+- **Streamlit** — Web interface
+- **scikit-learn** — SVM, PCA, model training
+- **NumPy / Pillow** — Image processing
+- **MNIST Dataset** — 70,000 training images
+Run Locally
 bash
-pip install numpy pandas scikit-learn matplotlib mahotas
+git clone https://github.com/swethahpvt/Handwritten-Digit-Recognition-Using-HOG-Pixel-Intensity-and-SVM
+cd Handwritten-Digit-Recognition-Using-HOG-Pixel-Intensity-and-SVM
+pip install -r requirements.txt
+streamlit run app.py
+
+Deployment
+
+Deployed on Render as a free web service.
+
+- Build Command: pip install -r requirements.txt
+- Start Command: streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+- Python Version: 3.11.9
+
+Author
+Swetha Babu — [GitHub Profile](https://github.com/swethahpvt)
