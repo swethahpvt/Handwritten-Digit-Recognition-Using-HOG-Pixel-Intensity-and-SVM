@@ -24,7 +24,6 @@ if uploaded_file is not None:
     
     img_array = np.array(img) / 255.0
     
-    # ✅ Extract HOG features (matches training)
     hog_features = hog(
         img_array,
         orientations=9,
@@ -37,15 +36,3 @@ if uploaded_file is not None:
     
     prediction = model.predict(hog_features)
     st.subheader(f"Predicted Digit: {prediction[0]}")
-```
-
----
-
-## Also update `requirements.txt`:
-Add `scikit-image`:
-```
-streamlit==1.40.0
-numpy==1.26.4
-pillow==10.4.0
-scikit-learn==1.3.2
-scikit-image==0.22.0
