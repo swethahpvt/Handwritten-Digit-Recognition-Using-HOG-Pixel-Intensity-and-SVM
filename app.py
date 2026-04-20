@@ -1,6 +1,6 @@
 import streamlit as st
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageOps
 import pickle
 from skimage.feature import hog
 
@@ -23,12 +23,20 @@ if uploaded_file is not None:
     img = Image.open(uploaded_file).convert('L')  # Grayscale
     img = img.resize((28, 28))                     # Resize to 28x28
 
-    st.image(img, caption="Uploaded Image", use_container_width=True)
+    # ✅ MNIST has white digit on BLACK background.
+    # Most real photos have black digit on WHITE background — so invert them.
+    img_array = np.array(img)
+    if img_array.mean() > 127:
+        # Bright background detected → invert so digit is white on black
+        img = ImageOps.invert(img)
+        img_array = np.array(img)
 
-    # Convert to numpy array and normalize (same as training: X / 255.0)
-    img_array = np.array(img) / 255.0             # shape: (28, 28)
+    st.image(img, caption="Preprocessed Image (28x28)", width=150)
 
-    # ✅ Extract HOG features (MUST match training pipeline exactly)
+    # Normalize (same as training: X / 255.0)
+    img_array = img_array / 255.0                  # shape: (28, 28)
+
+    # ✅ Extract HOG features (must match training pipeline exactly)
     hog_features = hog(
         img_array,
         pixels_per_cell=(4, 4),
