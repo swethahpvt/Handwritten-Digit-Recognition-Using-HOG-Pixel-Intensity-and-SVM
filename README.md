@@ -8,6 +8,16 @@ Overview
 
 This project compares three feature extraction techniques — **Pixel Intensity**, **HOG (Histogram of Oriented Gradients)**, and **Zernike Moments** — combined with multiple classifiers to classify handwritten digits from the MNIST dataset.
 
+Problem Statement & Motivation
+
+Handwritten digit recognition is a foundational problem in computer vision with real-world applications in:
+
+- Postal automation* — reading handwritten ZIP codes and addresses
+- Bank cheque processing* — automatically reading handwritten amounts
+- Digitizing historical records* — converting handwritten ledgers and documents
+- Accessibility technology* — assistive tools for people with disabilities
+
+Despite decades of research, building accurate, fast, and lightweight digit recognizers remains a meaningful challenge. Deep learning methods achieve high accuracy but require significant compute. This project explores whether *classical machine learning* (SVM, KNN, Logistic Regression, Random Forest) combined with smart feature engineering can achieve competitive performance — and it does, reaching *98.1% accuracy* with an SVM on raw pixel features
 The best performing model — **Pixel + SVM with 98.1% accuracy** — is deployed as an interactive Streamlit web app.
 
 Model Performance Comparison
