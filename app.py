@@ -17,7 +17,7 @@ st.write("Upload an image of a digit (0-9)")
 
 uploaded_file = st.file_uploader("Choose an image...", type=["png", "jpg", "jpeg"])
 
-if uploaded_file is not None:
+#if uploaded_file is not None:
 
     # Load image and convert to grayscale
     img = Image.open(uploaded_file).convert('L')
