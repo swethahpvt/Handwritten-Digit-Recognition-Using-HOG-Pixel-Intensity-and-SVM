@@ -20,6 +20,17 @@ Handwritten digit recognition is a foundational problem in computer vision with 
 Despite decades of research, building accurate, fast, and lightweight digit recognizers remains a meaningful challenge. Deep learning methods achieve high accuracy but require significant compute. This project explores whether *classical machine learning* (SVM, KNN, Logistic Regression, Random Forest) combined with smart feature engineering can achieve competitive performance — and it does, reaching *98.1% accuracy* with an SVM on raw pixel features
 The best performing model — **Pixel + SVM with 98.1% accuracy** — is deployed as an interactive Streamlit web app.
 
+Source
+The *MNIST (Modified National Institute of Standards and Technology)* dataset is the benchmark dataset for handwritten digit recognition.
+
+- *Source:* [Yann LeCun's MNIST Page](http://yann.lecun.com/exdb/mnist/) / sklearn.datasets.fetch_openml('mnist_784')
+- *Total Size:* 70,000 grayscale images
+  - Training set: 60,000 images
+  - Test set: 10,000 images
+- Image Dimensions:* 28 × 28 pixels (784 features per image after flattening)
+- Pixel Range:* 0–255 (normalized to 0–1 during preprocessing)
+- Classes:* 10 (digits 0 through 9)
+  
 Model Performance Comparison
 
 | Feature   | SVM   | KNN   | Logistic Regression | Random Forest |
